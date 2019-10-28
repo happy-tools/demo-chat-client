@@ -1,0 +1,37 @@
+{
+  "name": "happychat-transport",
+  "version": "1.0.0",
+  "description": "## Before you begin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-flow": "^7.0.0",
+    "flow-bin": "^0.110.1",
+    "flow-typed": "^2.6.2",
+    "ink": "^2.5.0",
+    "ink-box": "^1.0.0",
+    "react": "^16.11.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-flow",
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ]
+  }
+}
