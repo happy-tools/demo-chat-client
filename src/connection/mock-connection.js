@@ -1,7 +1,7 @@
 /**
  * @flow
  */
-import Observable from './observable';
+import { Observable, Notifier } from './notifier-interface';
 import { createMessageId, createTimestamp } from './transport-api';
 
 import type {
@@ -9,7 +9,8 @@ import type {
 	ConnectionStatus,
 	ChatStatus,
 	OutboundMessage,
-	DeliveryAttempt
+	DeliveryAttempt,
+	Message
 } from './transport-api';
 
 /**
@@ -19,10 +20,12 @@ export class MockConnection implements TransportAPI {
 
 	connectionStatus: Observable<ConnectionStatus>;
 	chatStatus: Observable<ChatStatus>;
+	messageNotifier: Notifier<Message>;
 
 	constructor() {
 		this.connectionStatus = new Observable('disconnected');
 		this.chatStatus = new Observable('unassigned');
+		this.messageNotifier = new Notifier();
 	}
 
 	connect(token: string): void {
@@ -43,6 +46,14 @@ export class MockConnection implements TransportAPI {
 
 	getConnectionStatus(): ConnectionStatus {
 		return this.connectionStatus.currentValue;
+	}
+
+	addMessageListener(listener: Message => void): void {
+		this.messageNotifier.addListener(listener);
+	}
+
+	removeMessageListener(listener: Message => void): void {
+		this.messageNotifier.removeListener(listener);
 	}
 
 	addChatStatusListener(listener: ChatStatus => void) {
@@ -66,7 +77,14 @@ export class MockConnection implements TransportAPI {
 			sentTimestamp,
 			receipt: new Promise((resolve, reject) => {
 				setTimeout(() => {
-					reject( new Error( 'not implemented' ) );
+					const inboundMessage = {
+						id: messageId,
+						timestamp: createTimestamp(),
+						text: message.text,
+						author: 'customer',
+					};
+					resolve({ message: inboundMessage });
+					this.messageNotifier.notify(inboundMessage);
 				}, 100);
 			}),
 		}
