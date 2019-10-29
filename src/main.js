@@ -5,6 +5,9 @@ import * as React from 'react';
 
 import { render, Box, useInput, useStdin, useStdout, AppContext, Color } from 'ink';
 import InkBox from 'ink-box';
+import ConnectionStatusIndicator from './components/connection-status-indicator';
+
+import useChat from './use-chat';
 
 type Size = {width: number, height: number};
 
@@ -39,11 +42,12 @@ const Line = ({ width }: {width: number}) => {
 const Demo = () => {
 	const { exit } = React.useContext(AppContext);
 	const size = useSize();
-	const [draft, setDraft] = React.useState("one\ntwo\nthree");
-	const [debug, setDebug] = React.useState();
+	const [draft, setDraft] = React.useState("");
+	const chat = useChat( 'mock-token' );
+
 	useInput((input, key) => {
-		setDebug({input, key, code: input.codePointAt(0), char: input.charCodeAt(0)});
 		if (key.return) {
+			chat.sendMessage(draft);
 			setDraft("");
 			return;
 		}
@@ -64,7 +68,6 @@ const Demo = () => {
 	return (
 		<Box width={size.width} height={size.height-1} flexDirection="column">
 			<Box flexGrow={1} flexDirection="column">
-				<Box>{JSON.stringify(debug, null, '  ')}</Box>
 				<Box>
 					<Box width={10}>Sam</Box>
 					<Box>hsnhaosnh eusntaho suh aosntuh staoeh ustnaho utsnaho esuh aosnuh saoteu staoh eust haoetnsu tsnoaeh tnsah oetush aosenuh taoe utnsaoehusth aoensu hoesatn usaoeh usoae hsoh esuh aoesntuh asontuh eoas</Box>
@@ -73,7 +76,8 @@ const Demo = () => {
 			<Line width={size.width} />
 			<Box flexDirection="row" width="100%" minHeight={1}>
 				<Box paddingLeft={1}>
-					<Color hsl={[32, 100, 50]}>○</Color> ▶ ⎸
+					<ConnectionStatusIndicator status={chat.connectionStatus} />
+					▶ ⎸
 				</Box>
 				<Box flexGrow={1} flexDirection="column">
 					<Box width="100%">{draft}</Box>

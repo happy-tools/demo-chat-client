@@ -2,11 +2,19 @@
  * @flow
  */
 import EventEmitter from 'events';
+import createMockConnection from './connection/mock-connection';
 
-class Connection extends EventEmitter {
+import type { TransportAPI } from './connection/transport-api';
 
-}
-
-export default function createClient() {
-	return new Connection();
+/**
+ * Creates a Happy Chat client with `token` used to authenticate the customer chat. Supports
+ * alternate ServerAPI implementations with `defaultMockServer()` to simulate a successfully
+ * authenticated chat.
+ *
+ * Example:
+ *
+ *   const client = createClient();
+ */
+export default function createClient(createTransport:() => TransportAPI = createMockConnection) {
+	return createTransport();
 }
