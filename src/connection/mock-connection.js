@@ -3,6 +3,7 @@
  */
 import { Observable, Notifier } from './notifier-interface';
 import { createMessageId, createTimestamp } from './transport-api';
+import bot from './bot';
 
 import type {
 	TransportAPI,
@@ -96,5 +97,16 @@ export class MockConnection implements TransportAPI {
 }
 
 export default function createMockConnection() {
-	return new MockConnection();
+	const connection = new MockConnection();
+	connection.addMessageListener((message) => {
+		bot(message).forEach((response) => {
+			setTimeout(() => connection.messageNotifier.notify({
+				id: createMessageId(),
+				timestamp: createTimestamp(),
+				text: response,
+				author: 'agent',
+			}), 800);
+		});
+	})
+	return connection;
 }
