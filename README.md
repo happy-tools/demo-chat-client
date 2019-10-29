@@ -19,25 +19,17 @@ npm start
 You should see a terminal based UI:
 
 ```
-{
-  "input": ".",
-  "key": {
-    "upArrow": false,
-    "downArrow": false,
-    "leftArrow": false,
-    "rightArrow": false,
-    "return": false,
-    "escape": false,
-    "ctrl": false,
-    "shift": false,
-    "meta": false
-  },
-  "code": 46,
-  "char": 46
-}
 Sam  hsnhaosnh eusntaho suh aosntuh staoeh ustnaho utsnaho esuh aosnuh saoteu staoh eust haoetnsu ts
 noaeh tnsah oetush aosenuh taoe utnsaoehusth aoensu hoesatn usaoeh usoae hsoh esuh aoesntuh asontuh
 eoas
+
+
+
+
+
+
+
+
 
 
 
