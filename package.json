@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "check": "flow",
     "start": "babel-node src/main"
   },
   "author": "",

@@ -29,5 +29,9 @@ export default function ChatMessageContainer(props: Props) {
 				</Box>
 			)
 		}
+		default: {
+			(props.author: empty)
+			return null;
+		}
 	}
 }
