@@ -4,7 +4,7 @@
   "description": "## Before you begin",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "babel-node src/main"
   },
   "author": "",
@@ -19,6 +19,7 @@
     "flow-typed": "^2.6.2",
     "ink": "^2.5.0",
     "ink-box": "^1.0.0",
+    "jest": "^24.9.0",
     "react": "^16.11.0",
     "uuid": "^3.3.3"
   },
